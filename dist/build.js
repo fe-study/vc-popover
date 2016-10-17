@@ -387,7 +387,7 @@ exports = module.exports = __webpack_require__(5)();
 
 
 // module
-exports.push([module.i, ".vc-popover-component {\n  display: inline-block;\n  position: relative;\n}\n.scale-transition,\n.fade-transition {\n  display: block;\n}\n.scale-enter {\n  -webkit-animation: scale-in 0.15s ease-in;\n          animation: scale-in 0.15s ease-in;\n}\n.scale-leave {\n  -webkit-animation: scale-out 0.15s ease-out;\n          animation: scale-out 0.15s ease-out;\n}\n@-webkit-keyframes scale-in {\n  0% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n    opacity: 0;\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n  }\n}\n@keyframes scale-in {\n  0% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n    opacity: 0;\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n  }\n}\n@-webkit-keyframes scale-out {\n  0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n  }\n  100% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n    opacity: 0;\n  }\n}\n@keyframes scale-out {\n  0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n  }\n  100% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n    opacity: 0;\n  }\n}\n", ""]);
+exports.push([module.i, "/* 默认只提供vc-scale */\n.vc-popover-component {\n  display: inline-block;\n  position: relative;\n}\n.vc-popover-trigger-slot {\n  display: inline-block;\n}\n.vc-popover-trigger-slot {\n  display: inline-block;\n}\n.vc-scale-transition,\n.vc-fade-transition {\n  display: block;\n}\n.vc-fade-enter {\n  -webkit-animation: fade-in 0.15s ease-in;\n          animation: fade-in 0.15s ease-in;\n}\n.vc-fade-leave {\n  -webkit-animation: fade-out 0.15s ease-out;\n          animation: fade-out 0.15s ease-out;\n}\n@-webkit-keyframes fade-in {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@keyframes fade-in {\n  from {\n    opacity: 0;\n  }\n  to {\n    opacity: 1;\n  }\n}\n@-webkit-keyframes fade-out {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n  }\n}\n@keyframes fade-out {\n  from {\n    opacity: 1;\n  }\n  to {\n    opacity: 0;\n  }\n}\n.vc-scale-enter {\n  -webkit-animation: scale-in 0.15s ease-in;\n          animation: scale-in 0.15s ease-in;\n}\n.vc-scale-leave {\n  -webkit-animation: scale-out 0.15s ease-out;\n          animation: scale-out 0.15s ease-out;\n}\n@-webkit-keyframes scale-in {\n  0% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n    opacity: 0;\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n  }\n}\n@keyframes scale-in {\n  0% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n    opacity: 0;\n  }\n  100% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n  }\n}\n@-webkit-keyframes scale-out {\n  0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n  }\n  100% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n    opacity: 0;\n  }\n}\n@keyframes scale-out {\n  0% {\n    -webkit-transform: scale(1);\n            transform: scale(1);\n    opacity: 1;\n  }\n  100% {\n    -webkit-transform: scale(0);\n            transform: scale(0);\n    opacity: 0;\n  }\n}\n", ""]);
 
 // exports
 
@@ -452,7 +452,7 @@ module.exports = function() {
 /* 6 */
 /***/ function(module, exports) {
 
-module.exports = "<div class=\"vc-popover-component\">\n        <span v-el:trigger>\n            <slot></slot>\n        </span>\n        <div v-el:popover \n            v-show=\"show\"\n            :class=\"['popover', placement]\"\n            :transition=\"effect\"\n        >\n            <div class=\"arrow\"></div>\n            <h3 v-if=\"title\" class=\"popover-title\">\n                <slot name=\"title\">{{ title }}</slot>\n            </h3>\n            <slot name=\"content\">\n                <div class=\"popover-content\">\n                    {{{ content }}}\n                </div>\n            </slot>\n        </div>\n    </div>";
+module.exports = "<div class=\"vc-popover-component\">\n        <div v-el:trigger class=\"vc-popover-trigger-slot\">\n            <slot></slot>\n        </div>\n        <div v-el:popover \n            v-show=\"show\"\n            :class=\"['popover', placement]\"\n            :transition=\"effect\"\n        >\n            <div class=\"arrow\"></div>\n            <h3 v-if=\"title\" class=\"popover-title\">\n                <slot name=\"title\">{{ title }}</slot>\n            </h3>\n            <slot name=\"content\">\n                <div class=\"popover-content\">\n                    {{{ content }}}\n                </div>\n            </slot>\n        </div>\n    </div>";
 
 /***/ },
 /* 7 */
@@ -466,9 +466,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 // <template>
 //     <div class="vc-popover-component">
-//         <span v-el:trigger>
+//         <div v-el:trigger class="vc-popover-trigger-slot">
 //             <slot></slot>
-//         </span>
+//         </div>
 //         <div v-el:popover 
 //             v-show="show"
 //             :class="['popover', placement]"
@@ -488,19 +488,71 @@ Object.defineProperty(exports, "__esModule", {
 // </template>
 
 // <style>
+// /* 默认只提供vc-scale */
 // .vc-popover-component {
 //     display: inline-block;
 //     position: relative;
 // }
-// .scale-transition,
-// .fade-transition {
+// .vc-popover-trigger-slot {
+//     display: inline-block;
+// }
+// .vc-popover-trigger-slot {
+//     display: inline-block;
+// }
+// .vc-scale-transition,
+// .vc-fade-transition {
 //     display: block;
 // }
-// .scale-enter {
-//     animation:scale-in 0.15s ease-in;
+// .vc-fade-enter {
+//     animation: fade-in 0.15s ease-in;
 // }
-// .scale-leave {
-//     animation:scale-out 0.15s ease-out;
+// .vc-fade-leave {
+//     animation: fade-out 0.15s ease-out;
+// }
+// @-webkit-keyframes fade-in {
+//   from {
+//     opacity: 0;
+//   }
+
+//   to {
+//     opacity: 1;
+//   }
+// }
+
+// @keyframes fade-in {
+//   from {
+//     opacity: 0;
+//   }
+
+//   to {
+//     opacity: 1;
+//   }
+// }
+// @-webkit-keyframes fade-out {
+//   from {
+//     opacity: 1;
+//   }
+
+//   to {
+//     opacity: 0;
+//   }
+// }
+
+// @keyframes fade-out {
+//   from {
+//     opacity: 1;
+//   }
+
+//   to {
+//     opacity: 0;
+//   }
+// }
+
+// .vc-scale-enter {
+//     animation: scale-in 0.15s ease-in;
+// }
+// .vc-scale-leave {
+//     animation: scale-out 0.15s ease-out;
 // }
 // @keyframes scale-in {
 //     0% {
@@ -528,6 +580,17 @@ Object.defineProperty(exports, "__esModule", {
 exports.default = {
     name: 'vc-popover',
     props: {
+        show: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * 函数式显示，此属性配合show来使用，只响应 `show` prop和控制，不受事件控制
+         */
+        functionalShow: {
+            type: Boolean,
+            default: false
+        },
         /* one of click, hover, focus, contextmenu */
         trigger: {
             type: String,
@@ -539,7 +602,7 @@ exports.default = {
         },
         effect: {
             type: String,
-            default: 'fade'
+            default: 'vc-fade'
         },
         title: {
             type: String
@@ -560,8 +623,8 @@ exports.default = {
             position: {
                 top: 0,
                 left: 0
-            },
-            show: true
+            }
+            // show: true
         };
     },
 
@@ -575,10 +638,16 @@ exports.default = {
             this.show = false;
         }
     },
+    created: function created() {
+        // 虽然`show` 是一个prop，由用户完全控制传参，但不管如何，show必须为true来计算初始位置 
+        // Popover组件默认先让元素为true来计算位置，然后直接隐藏
+        this._initShow = this.show;
+        this.show = true;
+    },
     ready: function ready() {
         var _this = this;
 
-        if (this.closeable) {
+        if (!this.functionalShow && this.closeable) {
             document.addEventListener(this.trigger, this.hide, false);
         }
         var popover = this.$els.popover;
@@ -609,8 +678,13 @@ exports.default = {
         }
         popover.style.top = this.position.top + 'px';
         popover.style.left = this.position.left + 'px';
-        popover.style.display = 'none';
-        this.show = !this.show;
+
+        if (!this._initShow) {
+            popover.style.display = 'none';
+            this.show = !this.show;
+        }
+
+        this.show = this._initShow;
 
         var events = this.trigger === 'contextmenu' ? 'contextmenu' : this.trigger === 'hover' ? 'mouseleave mouseenter' : this.trigger === 'focus' ? 'blur focus' : 'click';
 
@@ -620,7 +694,7 @@ exports.default = {
                 trigger = null;
             }
         }
-        if (trigger) {
+        if (!this.functionalShow && trigger) {
             events.split(/\s+/g).forEach(function (event) {
                 trigger.addEventListener(event, _this.toggle, false);
             });
@@ -631,10 +705,12 @@ exports.default = {
     beforeDestroy: function beforeDestroy() {
         var _this2 = this;
 
-        this._triggerEvents.split(/\s+/g).forEach(function (event) {
-            _this2._trigger && _this2._trigger.removeEventListener(event, _this2.toggle, false);
-        });
-        if (this.closeable) {
+        if (!this.functionalShow && this._trigger) {
+            this._triggerEvents.split(/\s+/g).forEach(function (event) {
+                _this2._trigger.removeEventListener(event, _this2.toggle, false);
+            });
+        }
+        if (!this.functionalShow && this.closeable) {
             document.removeEventListener(this.trigger, this.hide, false);
         }
     }

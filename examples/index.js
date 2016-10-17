@@ -9,13 +9,11 @@ new Vue({
                 'true': true,
                 'false': false
             },
+            show: true,
+            closeable: false 
 		}
 	},
     methods: {
-        handleClick (...args) {
-            alert('click ' + args[0])
-            console.log(args)
-        },
     },
 	components: {
         vcPopover

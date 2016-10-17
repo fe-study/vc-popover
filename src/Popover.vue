@@ -1,8 +1,8 @@
 <template>
     <div class="vc-popover-component">
-        <span v-el:trigger>
+        <div v-el:trigger class="vc-popover-trigger-slot">
             <slot></slot>
-        </span>
+        </div>
         <div v-el:popover 
             v-show="show"
             :class="['popover', placement]"
@@ -22,19 +22,71 @@
 </template>
 
 <style>
+/* 默认只提供vc-scale */
 .vc-popover-component {
     display: inline-block;
     position: relative;
 }
-.scale-transition,
-.fade-transition {
+.vc-popover-trigger-slot {
+    display: inline-block;
+}
+.vc-popover-trigger-slot {
+    display: inline-block;
+}
+.vc-scale-transition,
+.vc-fade-transition {
     display: block;
 }
-.scale-enter {
-    animation:scale-in 0.15s ease-in;
+.vc-fade-enter {
+    animation: fade-in 0.15s ease-in;
 }
-.scale-leave {
-    animation:scale-out 0.15s ease-out;
+.vc-fade-leave {
+    animation: fade-out 0.15s ease-out;
+}
+@-webkit-keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.vc-scale-enter {
+    animation: scale-in 0.15s ease-in;
+}
+.vc-scale-leave {
+    animation: scale-out 0.15s ease-out;
 }
 @keyframes scale-in {
     0% {
@@ -62,6 +114,17 @@
 export default {
     name: 'vc-popover',
     props: {
+        show: {
+            type: Boolean,
+            default: false 
+        },
+        /**
+         * 函数式显示，此属性配合show来使用，只响应 `show` prop和控制，不受事件控制
+         */
+        functionalShow: {
+            type: Boolean,
+            default: false
+        },
         /* one of click, hover, focus, contextmenu */
         trigger: {
             type: String,
@@ -73,7 +136,7 @@ export default {
         },
         effect: {
             type: String,
-            default: 'fade'
+            default: 'vc-fade'
         },
         title: {
             type: String
@@ -94,8 +157,8 @@ export default {
             position: {
                 top: 0,
                 left: 0
-            },
-            show: true
+            }
+            // show: true
         }
     },
     methods: {
@@ -108,8 +171,14 @@ export default {
             this.show = false
         }
     },
+    created () {
+        // 虽然`show` 是一个prop，由用户完全控制传参，但不管如何，show必须为true来计算初始位置 
+        // Popover组件默认先让元素为true来计算位置，然后直接隐藏
+        this._initShow = this.show 
+        this.show = true 
+    },
     ready () {
-        if (this.closeable) {
+        if (!this.functionalShow && this.closeable) {
             document.addEventListener(this.trigger, this.hide, false)
         }
         const popover = this.$els.popover
@@ -140,8 +209,13 @@ export default {
         }
         popover.style.top = this.position.top + 'px'
         popover.style.left = this.position.left + 'px'
-        popover.style.display = 'none'
-        this.show = !this.show
+
+        if (!this._initShow) {
+            popover.style.display = 'none'
+            this.show = !this.show
+        }
+
+        this.show = this._initShow
 
         let events = this.trigger === 'contextmenu' ? 'contextmenu'
         : this.trigger === 'hover' ? 'mouseleave mouseenter'
@@ -151,7 +225,7 @@ export default {
             trigger = trigger.querySelectorAll('a,input,select,textarea,button')
             if (!trigger.length) { trigger = null }
         }
-        if (trigger) {
+        if (!this.functionalShow && trigger) {
             events.split(/\s+/g).forEach(event => {
                 trigger.addEventListener(event, this.toggle, false)
             })
@@ -160,10 +234,12 @@ export default {
         }
     },
     beforeDestroy () {
-        this._triggerEvents.split(/\s+/g).forEach(event => {
-            this._trigger && this._trigger.removeEventListener(event, this.toggle, false)
-        })
-        if (this.closeable) {
+        if (!this.functionalShow && this._trigger) {
+            this._triggerEvents.split(/\s+/g).forEach(event => {
+                this._trigger.removeEventListener(event, this.toggle, false)
+            })
+        }
+        if (!this.functionalShow && this.closeable) {
             document.removeEventListener(this.trigger, this.hide, false)
         }
     }

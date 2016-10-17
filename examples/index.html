@@ -1,89 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <link rel="stylesheet" href="./static/css/bootstrap.min.css">
-        <title>demo - vc-popover</title>
-        <style>
-            ::-webkit-scrollbar {
-                width: 8px;
-                height: 8px;
-            }
-            ::-webkit-scrollbar-thumb {
-                box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
-                border-radius: 4px;
-                background: rgba(119, 129, 149, 0.8);
-            }
-            .container {
-                width: 550px;
-                padding: 20px;
-            }
-            .container label {
-                font-weight: normal;
-            }
-            .btn {
-            }
-            .vc-popover-content {
-                padding: 15px 20px;
-                width: 220px;
-                text-align: center;
-            }
-            .vc-popover-content .msg {
-                margin: 20px;
-            }
-            .vc-popover-content .btn {
-                padding: 4px 12px;
-            }
-        </style>
-    </head>
-    <body>
-        <h1 align="center">@Vue Component - vc-popover</h1>
-        <div class="text-center">Popover组件，封装就近弹出层功能，给用户提示信息或操作，可以去做tooltip，confirm等常用组件</div>
-        <a style="display: block" class="text-center" href="https://github.com/iwaimai-bi-fe/vc-popover">view on Github</a>
-        <hr>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="./static/css/bootstrap.min.css">
+<title>demo - vc-popover</title>
+<style>
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+        background: rgba(119, 129, 149, 0.8);
+    }
+    .container {
+        width: 550px;
+        padding: 20px;
+    }
+    .container label {
+        font-weight: normal;
+    }
+    .btn {
+    }
+    .vc-popover-content {
+        padding: 15px 20px;
+        width: 220px;
+        text-align: center;
+    }
+    .vc-popover-content .msg {
+        margin: 20px;
+    }
+    .vc-popover-content .btn {
+        padding: 4px 12px;
+    }
+</style>
+</head>
+<body>
+    <h1 align="center">@Vue Component - vc-popover</h1>
+    <div class="text-center">Popover组件，封装就近弹出层功能，给用户提示信息或操作，可以去做tooltip，confirm等常用组件</div>
+    <a style="display: block" class="text-center" href="https://github.com/iwaimai-bi-fe/vc-popover">view on Github</a>
+    <hr>
 
-        <div id="app" class="container">
+    <div id="app" class="container">
 
-            <vc-popover 
-                effect="fade"
-                placement="right"
-                title="Title"
-                content="content"
-            >
-                <button class="btn btn-xs btn-success">right</button>
-            </vc-popover>
+        <vc-popover 
+            placement="right"
+            title="Title"
+            content="content"
+        >
+            <button class="btn btn-xs btn-success">right</button>
+        </vc-popover>
 
-            <vc-popover 
-                effect="fade"
-                placement="top"
-                content="content"
-            >
-                <div slot="content" class="vc-popover-content">
-                    <div class="msg">slot name="content"</div>
-                    <button class="btn btn-xs btn-info" style="margin-right: 6px;">确定</button>
-                    <button class="btn btn-xs">取消</button>
-                </div>
-                <button class="btn btn-xs btn-success">top</button>
-            </vc-popover>
+        <!-- functionalShow: 不再响应外界事件导致的显示隐藏 -->
+        <vc-popover 
+            :show.sync="show"
+            :functional-show="true"
+            placement="top"
+            content="content"
+        >
+            <div slot="content" class="vc-popover-content">
+                <div class="msg">slot name="content"(show = true, closeable = false)</div>
+                <button class="btn btn-xs btn-info" @click="this.show = false" style="margin-right: 6px;">确定</button>
+                <button class="btn btn-xs" @click="this.show = false">取消</button>
+            </div>
+            <button class="btn btn-xs btn-success">top</button>
+        </vc-popover>
 
-            <vc-popover 
-                effect="fade"
-                placement="bottom"
-                title="Title"
-                content="content"
-            >
-                <button class="btn btn-xs btn-success">bottom</button>
-            </vc-popover>
+        <vc-popover 
+            placement="bottom"
+            title="Title"
+            content="content"
+        >
+            <button class="btn btn-xs btn-success">bottom</button>
+        </vc-popover>
 
-            <vc-popover 
-                effect="fade"
-                placement="left"
-                title="Title"
-                content="content"
-            >
-                <button class="btn btn-xs btn-success">left</button>
-            </vc-popover>
-        </div>
-        <script src='../dist/example.js'></script>
-    </body>
+        <vc-popover 
+            placement="left"
+            title="Title"
+            content="content"
+        >
+            <button class="btn btn-xs btn-success">left</button>
+        </vc-popover>
+    </div>
+    <script src='../dist/example.js'></script>
+</body>
 </html>
